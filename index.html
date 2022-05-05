@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <title>Чёрная дыра | Лабораторная работа №3</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <!-- Подключение стилей -->
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="icon" type="image/png" href="favicon.png"/>
+    </head>
+    <body>
+        <!-- Основной контент приложения -->
+        <div id="hint-text" class="hidden-phone initially-hidden">
+            Для перемещения используйте мышь или параметры в правом меню ⟶
+        </div>
+        <div class="info ">
+            <div id="loader">
+                Загрузка...
+                <div class="disclaimer">
+                    Проект для демонстрации возможностей WebGL. Для корректной работы используйте последние версии браузеров Chrome или Firefox
+                </div>
+            </div>
+        </div>
+        <!-- Подключение основных библиотек -->
+        <script src="libs/jquery-2.1.4.min.js"></script>
+        <script src="libs/three.min.js"></script>
+        <script src="libs/OrbitControls.js"></script>
+        <script src="libs/Detector.js"></script>
+        <script src="libs/stats.min.js"></script>
+        <script src="libs/ShaderLoader.min.js"></script>
+        <script src="libs/mustache.min.js"></script>
+        <script src="libs/dat.gui.min.js"></script>
+        <script src="js/three-js-monkey-patch.js"></script>
+        <!-- Инициализация шейдеров -->
+        <script id="vertex-shader" type="x-shader/x-vertex">
+            void main() {
+                gl_Position = vec4( position, 1.0 );
+            }
+        </script>
+        <!-- Подключение шейдера трассировки и главного файла приложения -->
+        <script data-src="glsl/raytracer.glsl" data-name="raytracer" type="x-shader/x-fragment"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
