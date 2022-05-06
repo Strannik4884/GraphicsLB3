@@ -344,6 +344,11 @@ function setupGUI() {
 
     gui.width = 340
 
+    window.addEventListener('keydown', function (event) {
+        if (event.altKey && event.code === 'KeyM') {
+            dat.GUI.toggleHide();
+        }
+    });
 }
 
 // обработчик события изменения размера окна
