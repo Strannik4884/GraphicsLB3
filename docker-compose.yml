@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  black-hole:
+    build: .
+    container_name: black-hole
+    restart: always
+    ports:
+      - 8080:80
