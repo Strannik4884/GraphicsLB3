@@ -344,6 +344,7 @@ function setupGUI() {
 
     gui.width = 340
 
+    // обработчик комбинации Alt + M для добавления/удаления панели управления
     window.addEventListener('keydown', function (event) {
         if (event.altKey && event.code === 'KeyM') {
             dat.GUI.toggleHide();
