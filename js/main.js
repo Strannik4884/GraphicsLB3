@@ -261,7 +261,7 @@ function setupGUI() {
     }
 
     var gui = new dat.GUI();
-    
+
     gui.add(p, 'quality', ['низкое', 'среднее', 'высокое']).name('Качество').onChange(function (value) {
         $('.planet-controls').show();
         switch(value) {
@@ -292,7 +292,7 @@ function setupGUI() {
         }
         isStats = value
     });
-    gui.add(p, 'accretion_disk').name('Аккреция').onChange(updateShader);
+    gui.add(p, 'accretion_disk').name('Аккреционный диск').onChange(updateShader);
 
     var folder = gui.addFolder('Наблюдатель');
     folder.add(p.observer, 'motion').name('Движение').onChange(function(motion) {
@@ -327,20 +327,22 @@ function setupGUI() {
     folder = gui.addFolder('Релятивистские эффекты');
     folder.add(p, 'aberration').name('Аберрация').onChange(updateShader);
     folder.add(p, 'beaming').name('Свечение').onChange(updateShader);
-    folder.add(p, 'doppler_shift').name('Сдвиг').onChange(updateShader);
+    folder.add(p, 'doppler_shift').name('Доплеровский сдвиг').onChange(updateShader);
     setGuiRowClass(
-        folder.add(p, 'gravitational_time_dilation').name('Замедление').onChange(updateShader),
+        folder.add(p, 'gravitational_time_dilation').name('Замедление времени').onChange(updateShader),
         'planet-controls indirect-planet-controls');
     setGuiRowClass(
-        folder.add(p, 'lorentz_contraction').name('Сокращение').onChange(updateShader),
+        folder.add(p, 'lorentz_contraction').name('Лоренцево сокращение').onChange(updateShader),
         'planet-controls indirect-planet-controls');
 
     folder.open();
 
     folder = gui.addFolder('Время');
     folder.add(p, 'light_travel_time').name('Скорость света').onChange(updateShader);
-    folder.add(p, 'time_scale').min(0).name('Скорость');
+    folder.add(p, 'time_scale').min(0).name('Ускорение');
     folder.open()
+
+    gui.width = 340
 
 }
 
