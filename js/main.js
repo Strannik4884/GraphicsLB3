@@ -76,7 +76,7 @@ var observer = new Observer();
 function Shader(mustacheTemplate) {
     this.parameters = {
         n_steps: 100,
-        quality: 'medium',
+        quality: 'среднее',
         accretion_disk: true,
         planet: {
             enabled: true,
@@ -97,7 +97,7 @@ function Shader(mustacheTemplate) {
         },
 
         planetEnabled: function() {
-            return this.planet.enabled && this.quality !== 'fast';
+            return this.planet.enabled && this.quality !== 'низкое';
         },
 
         observerMotion: function() {
@@ -268,27 +268,27 @@ function setupGUI() {
 
     var gui = new dat.GUI();
 
-    gui.add(p, 'quality', ['fast', 'medium', 'high']).onChange(function (value) {
+    gui.add(p, 'quality', ['низкое', 'среднее', 'высокое']).name('Качество').onChange(function (value) {
         $('.planet-controls').show();
         switch(value) {
-        case 'fast':
+        case 'низкое':
             p.n_steps = 40;
             $('.planet-controls').hide();
             break;
-        case 'medium':
+        case 'среднее':
             p.n_steps = 100;
             break;
-        case 'high':
+        case 'высокое':
             p.n_steps = 200;
             break;
         }
 
         updateShader();
     });
-    gui.add(p, 'accretion_disk').onChange(updateShader);
+    gui.add(p, 'accretion_disk').name('Аккреция').onChange(updateShader);
 
     var folder = gui.addFolder('Наблюдатель');
-    folder.add(p.observer, 'motion').onChange(function(motion) {
+    folder.add(p.observer, 'motion').name('Движение').onChange(function(motion) {
         updateCamera();
         updateShader();
         if (motion) {
@@ -298,40 +298,42 @@ function setupGUI() {
         }
         hint.fadeIn();
     });
-    folder.add(p.observer, 'distance').min(1.5).max(30).onChange(updateCamera);
+    folder.add(p.observer, 'distance').min(1.5).max(30).name('Расстояние').onChange(updateCamera);
     folder.open();
 
     folder = gui.addFolder('Планета');
-    folder.add(p.planet, 'enabled').onChange(function(enabled) {
+    folder.add(p.planet, 'enabled').name('Включена').onChange(function(enabled) {
         updateShader();
         var controls = $('.indirect-planet-controls').show();
         if (enabled) controls.show();
         else controls.hide();
     });
-    folder.add(p.planet, 'distance').min(1.5).onChange(updateUniforms);
-    folder.add(p.planet, 'radius').min(0.01).max(2.0).onChange(updateUniforms);
+    folder.add(p.planet, 'distance').name('Расстояние').min(1.5).onChange(updateUniforms);
+    folder.add(p.planet, 'radius').min(0.01).max(2.0).name('Радиус').onChange(updateUniforms);
     $(folder.domElement).addClass('planet-controls');
 
     function setGuiRowClass(guiEl, klass) {
         $(guiEl.domElement).parent().parent().addClass(klass);
     }
+    folder.open()
 
     folder = gui.addFolder('Релятивистские эффекты');
-    folder.add(p, 'aberration').onChange(updateShader);
-    folder.add(p, 'beaming').onChange(updateShader);
-    folder.add(p, 'doppler_shift').onChange(updateShader);
+    folder.add(p, 'aberration').name('Аберрация').onChange(updateShader);
+    folder.add(p, 'beaming').name('Свечение').onChange(updateShader);
+    folder.add(p, 'doppler_shift').name('Сдвиг').onChange(updateShader);
     setGuiRowClass(
-        folder.add(p, 'gravitational_time_dilation').onChange(updateShader),
+        folder.add(p, 'gravitational_time_dilation').name('Замедление').onChange(updateShader),
         'planet-controls indirect-planet-controls');
     setGuiRowClass(
-        folder.add(p, 'lorentz_contraction').onChange(updateShader),
+        folder.add(p, 'lorentz_contraction').name('Сокращение').onChange(updateShader),
         'planet-controls indirect-planet-controls');
 
     folder.open();
 
     folder = gui.addFolder('Время');
-    folder.add(p, 'light_travel_time').onChange(updateShader);
-    folder.add(p, 'time_scale').min(0);
+    folder.add(p, 'light_travel_time').name('Скорость света').onChange(updateShader);
+    folder.add(p, 'time_scale').min(0).name('Скорость');
+    folder.open()
 
 }
 
