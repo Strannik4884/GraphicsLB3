@@ -4,10 +4,10 @@
 
 Для запуска проекта необходимо выполнить следующие команды:
 1. Сборка docker-образа:
-*docker build . -t black-hole*
+*docker build . -t graphicslb3_black-hole*
 
 2. Создание и запуск контейнера с проектом на порту 8080:
-*docker run -d -p 8080:80 --name black-hole black-hole*
+*docker run -d -p 8080:80 --name black-hole graphicslb3_black*
 
 После чего проект будет доступен по следующему адресу: http://localhost:8080.
 
