@@ -154,7 +154,7 @@ function degToRad(a) { return Math.PI * a / 180.0; }
 
     loadTexture('galaxy', 'img/milkyway.jpg', THREE.NearestFilter);
     loadTexture('spectra', 'img/spectra.png', THREE.LinearFilter);
-    loadTexture('moon', 'img/beach-ball.png', THREE.LinearFilter);
+    loadTexture('planet', 'img/planet.png', THREE.LinearFilter);
     loadTexture('stars', 'img/stars.png', THREE.LinearFilter);
     loadTexture('accretion_disk', 'img/accretion-disk.png', THREE.LinearFilter);
 })();
@@ -186,7 +186,7 @@ function init(textures) {
         star_texture: { type: "t", value: textures.stars },
         accretion_disk_texture: { type: "t",  value: textures.accretion_disk },
         galaxy_texture: { type: "t", value: textures.galaxy },
-        planet_texture: { type: "t", value: textures.moon },
+        planet_texture: { type: "t", value: textures.planet },
         spectrum_texture: { type: "t", value: textures.spectra }
     };
 
