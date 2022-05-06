@@ -68,7 +68,7 @@ Observer.prototype.move = function(dt) {
 };
 
 // объявление основных глобальных переменных
-var container, stats;
+var container, stats, isStats = false;
 var camera, scene, renderer, cameraControls, shader = null;
 var observer = new Observer();
 
@@ -234,12 +234,6 @@ function init(textures) {
     renderer.setPixelRatio( window.devicePixelRatio );
     container.appendChild( renderer.domElement );
 
-    stats = new Stats();
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '0px';
-    container.appendChild( stats.domElement );
-    $(stats.domElement).addClass('hidden-phone');
-
     camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 80000 );
     initializeCamera(camera);
 
@@ -267,7 +261,7 @@ function setupGUI() {
     }
 
     var gui = new dat.GUI();
-
+    
     gui.add(p, 'quality', ['низкое', 'среднее', 'высокое']).name('Качество').onChange(function (value) {
         $('.planet-controls').show();
         switch(value) {
@@ -284,6 +278,19 @@ function setupGUI() {
         }
 
         updateShader();
+    });
+    gui.add({is_show_stats: isStats}, 'is_show_stats').name('Мониторинг').onChange(function (value) {
+        if (value) {
+            stats = new Stats();
+            stats.domElement.style.position = 'absolute';
+            stats.domElement.style.top = '0px';
+            container.appendChild( stats.domElement );
+            $(stats.domElement).addClass('hidden-phone');
+        }
+        else {
+            document.getElementById('stats').remove()
+        }
+        isStats = value
     });
     gui.add(p, 'accretion_disk').name('Аккреция').onChange(updateShader);
 
@@ -417,7 +424,10 @@ function animate() {
         render();
         lastCameraMat = camera.matrixWorldInverse.clone();
     }
-    stats.update();
+
+    if (isStats) {
+        stats.update();
+    }
 }
 
 var lastCameraMat = new THREE.Matrix4().identity();
